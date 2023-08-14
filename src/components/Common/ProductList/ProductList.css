@@ -1,0 +1,26 @@
+.product-list-root {
+    background-color: #fff;
+    border: 1px solid #E1E1E1;
+    padding: 42px 65px;
+    display: grid;
+    grid-template-columns: 230px 230px 230px 230px 230px;
+    column-gap: 65px;
+    row-gap: 41px;
+}
+
+.product-list-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 3px;
+    border: 1px solid #E1E1E1;
+}
+
+.product-list-header > h4 {
+    text-transform: capitalize;
+    color: #013678;
+    font-size: 20px;
+    line-height: 36px;
+    margin: 0;
+}

@@ -21,8 +21,15 @@ export const URLS = {
   OTP_FORGOT_PASS: `${BASE_URL_TWO}/user/validateOTPForForgotPassword`,
   CHANGE_PASSOWRD: `${BASE_URL_TWO}/user/changePassword`,
   RESEND_OTP: `${BASE_URL_TWO}/user/resendotp`,
+  DASHBOARD: `${BASE_URL_TWO}/user/dashboard`
 };
 
 // common value contants
 export const WEBSOCKET_PROTOCOL = "OSC-WebSocket-Protocol";
 export const DEVICE_TYPE = "web";
+
+// Product Types
+export const FEATURED = "Featured Products";
+export const CATEGORIES = "Categories";
+export const SIMILAR = "Similar Products";
+export const RECENTLYVIEWED = "Recently Viewed Products";

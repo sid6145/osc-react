@@ -38,7 +38,6 @@ const DashboardHeader = (props) => {
     setAnchorEl(null);
   };
 
-
   useEffect(() => {
     startConnection()
   },[])

@@ -31,7 +31,6 @@ export const getErrorsBasedOnCode = (errorCode) => {
   }
 };
 
-
 const SignUp = (props) => {
   const navigate = useNavigate();
 

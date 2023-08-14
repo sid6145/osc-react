@@ -16,7 +16,7 @@ function App() {
     if(isLoggedIn){
       navigate("/dashboard")
     }
-  },[navigate])
+  },[navigate, isLoggedIn])
 
   return (
     <div className="App">
