@@ -1,11 +1,11 @@
 import React from "react";
 import ProductList from "../../Common/ProductList";
-import ProductCard from "../../Common/ProductCard";
 import { useEffect } from "react";
 import { apiClient } from "../../../utils";
 import { URLS } from "../../../constants";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDashboardData } from "../../../redux/dashboardReducer";
+import "./DashBoard.css";
 
 const Dashboard = (props) => {
   const dispatch = useDispatch();
@@ -38,22 +38,30 @@ const Dashboard = (props) => {
     similarProducts,
   } = useSelector((state) => state.dashboardReducer);
 
+  console.log("categories", categories);
   return (
-    featuredProducts?.length && (
-      <ProductList categoryTitle="Last viewed products">
-        {featuredProducts.map((item, index) => (
-            <ProductCard
-              key={`featured-product-${index}`}
-              price="₹31,499"
-              discountedPrice="₹33,995"
-              percentOff="7% off"
-              title="Canon EOS 3000D"
-            />
-        ))}
-      </ProductList>
-    )
-
-  )
+    <div className="dashboar-root">
+      <h2>{userData.sessionId}</h2>
+      {!recentlyViewedProducts && categories && ( 
+        <ProductList categoryTitle="Categories" productData={categories} />
+      )}
+      {featuredProducts && (
+        <ProductList categoryTitle="Featured" productData={featuredProducts} />
+      )}
+      {recentlyViewedProducts && (
+        <ProductList
+          categoryTitle="Last viewed products"
+          productData={recentlyViewedProducts}
+        />
+      )}
+      {similarProducts && (
+        <ProductList categoryTitle="Similar" productData={similarProducts} />
+      )}
+      {recentlyViewedProducts && categories && (
+        <ProductList categoryTitle="Categories" productData={categories} />
+      )}
+    </div>
+  );
 };
 
 export default Dashboard;

@@ -37,13 +37,8 @@ const useSocket = () => {
     localStorage.clear();
     clearInterval(hbInterval);
     clearInterval(msgReceivedInterval);
-    const response = await apiClient.post(URLS.LOGOUT, {
-      userId: userId,
-      sessionId: sessionId,
-    });
-    if(response.code === 200) {
+    window.location.reload()
       navigate("/");
-    }
   };
 
   const handleReconnect = () => {

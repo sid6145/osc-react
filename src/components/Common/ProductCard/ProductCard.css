@@ -1,5 +1,5 @@
 .product-card-root {
-    max-width: 200px;
+    width: 210px;
 }
 
 .product-image-root {
@@ -9,10 +9,17 @@
     margin-bottom: 3px;
 }
 
+.product-image-root img {
+    max-width: 150px;
+    height: 119px;
+    object-fit: contain;
+}
+
 .product-details {
     padding: 12px;
     border: 1px solid #E3E3E3;
     border-radius: 0px 0px 3px 3px;
+    height: 60px;
 }
 
 .product-title {
