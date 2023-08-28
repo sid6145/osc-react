@@ -1,0 +1,12 @@
+.cart-price-root {
+    max-width: 380px;
+}
+
+.cart-price-root > div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cart-price-root > div > p {
+    margin: 0;
+}

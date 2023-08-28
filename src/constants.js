@@ -5,11 +5,11 @@
 
 // const BASE_URL_ONE = "http://192.168.99.141:8080"
 // const BASE_URL_TWO = "http://192.168.99.141:8088"
-const BASE_URL_ONE = "http://192.168.99.117:8000";
-const BASE_URL_TWO = "http://192.168.99.117:8000";
+const BASE_URL_ONE = "http://localhost:8000";
+const BASE_URL_TWO = "http://localhost:8000";
 
 // export const SOCKET_BASE_URL = "ws://192.168.99.141:8888";
-export const SOCKET_BASE_URL = "ws://192.168.99.117:8888";
+export const SOCKET_BASE_URL = "ws://localhost:8888";
 
 export const URLS = {
   SIGN_UP: `${BASE_URL_ONE}/user/signup`,
@@ -33,3 +33,4 @@ export const FEATURED = "Featured Products";
 export const CATEGORIES = "Categories";
 export const SIMILAR = "Similar Products";
 export const RECENTLYVIEWED = "Recently Viewed Products";
+export const CART = "Cart"
