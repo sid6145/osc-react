@@ -9,6 +9,7 @@ import {
 
 const initialState = {
   isLoggedIn: false,
+  isSocketConnected: false,
   featuredProducts: null,
   categories: null,
   similarProducts: null,
@@ -23,29 +24,39 @@ const deleteCartItem = (state, prodId) => {
   state.cart = state.cart.filter((item) => item.productId !== prodId);
 };
 
+const handleDashboardDataUpdate = (state, item) => {
+  switch (item.TYPE) {
+    case FEATURED:
+      state.featuredProducts = item[FEATURED]?.length ? item[FEATURED] : null;
+      break;
+    case CATEGORIES:
+      state.categories = item[CATEGORIES]?.length ? item[CATEGORIES] : null;
+      break;
+    case RECENTLYVIEWED:
+      state.recentlyViewedProducts = item[RECENTLYVIEWED]?.length
+        ? item[RECENTLYVIEWED]
+        : null;
+      break;
+    case SIMILAR:
+      state.similarProducts = item[SIMILAR]?.length ? item[SIMILAR] : null;
+      break;
+    case CART:
+      state.cart = item[CART]?.length ? item[CART] : null;
+      break;
+    default:
+      break;
+  }
+};
+
 export const dashboardSlice = createSlice({
   name: "dasboard",
   initialState,
   reducers: {
     fetchDashboardData: (state, action) => {
-      action.payload.forEach((item) => {
-        if (item.TYPE === FEATURED) {
-          state.featuredProducts = item[FEATURED]?.length
-            ? item[FEATURED]
-            : null;
-        } else if (item.TYPE === CATEGORIES) {
-          state.categories = item[CATEGORIES]?.length ? item[CATEGORIES] : null;
-        } else if (item.TYPE === RECENTLYVIEWED) {
-          state.recentlyViewedProducts = item[RECENTLYVIEWED]?.length
-            ? item[RECENTLYVIEWED]
-            : null;
-        } else if (item.TYPE === SIMILAR) {
-          state.similarProducts = item[SIMILAR]?.length ? item[SIMILAR] : null;
-        } else if (item.TYPE === CART) {
-          state.cart = item[CART]?.length ? item[CART] : [];
-          state.cartCount = item[CART]?.length;
-        }
-      });
+      action?.payload?.length &&
+        action.payload.forEach((item) => {
+          handleDashboardDataUpdate(state, item);
+        });
     },
     setProductDetails: (state, action) => {
       state.productDetails = action.payload;
@@ -54,10 +65,11 @@ export const dashboardSlice = createSlice({
       state.productCategories = action.payload;
     },
     addToCart: (state, action) => {
-      const prodIndex = state.cart.findIndex(
+      const prodIndex = state?.cart?.findIndex(
         (item) => item.productId === action.payload.productId
       );
-      if (prodIndex > 0) {
+      console.log("prodIndex:::::",prodIndex);
+      if (prodIndex >= 0) {
         state.cart[prodIndex].cartQty += 1;
       } else {
         const newCartItem = { ...action.payload, cartQty: 1 };
@@ -65,7 +77,7 @@ export const dashboardSlice = createSlice({
       }
     },
     setCartData: (state, action) => {
-      state.cart = action.payload
+      state.cart = action.payload;
     },
     handleProdQuantityUpdate: (state, action) => {
       const { prodId, shouldIncrease } = action.payload;
@@ -87,11 +99,14 @@ export const dashboardSlice = createSlice({
       deleteCartItem(state, action.payload);
     },
     handleCartCountChange: (state, action) => {
-      state.cartCount = state.cart.length;
+      state.cartCount = state?.cart?.length
     },
     handleIsLoggedIn: (state, action) => {
       state.isLoggedIn = action.payload;
     },
+    handleIsSocketConnected: (state, action) => {
+      state.isSocketConnected = action.payload
+    }
   },
 });
 
@@ -104,7 +119,8 @@ export const {
   handleDeleteCartItem,
   handleCartCountChange,
   handleIsLoggedIn,
-  setCartData
+  handleIsSocketConnected,
+  setCartData,
 } = dashboardSlice.actions;
 
 export default dashboardSlice.reducer;

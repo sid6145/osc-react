@@ -4,7 +4,6 @@ import {
   LoadCanvasTemplate,
   validateCaptcha,
 } from "react-simple-captcha";
-import { useSearchParams } from "react-router-dom";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { apiClient } from "../../../api/apiClient";
@@ -13,11 +12,9 @@ import { getErrorsBasedOnCode } from "../../../Pages/SignUp";
 import TextInput from "../../TextInput";
 import CustomButton from "../../CustomButton";
 import { handleAlerts } from "../../../utils/helpers";
-import useLoader from "../../../customHooks/useLoader";
 
-function RegistrationForm() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { isLoading, handleLoading } = useLoader();
+function RegistrationForm(props) {
+  const {searchParams, setSearchParams, isLoading, handleLoading} = props
 
   useEffect(() => {
     if (searchParams.get("step") === "1") {
@@ -26,7 +23,9 @@ function RegistrationForm() {
   }, [searchParams]);
 
   const registrationFormSchema = Yup.object().shape({
-    fullName: Yup.string().required("This is a * required field"),
+    fullName: Yup.string()
+    .required("This is a * required field")
+    .matches(/^[a-zA-Z\s]+$/, "Only letters are allowed in this field."),
     email: Yup.string()
       .email("Please enter a valid email address")
       .required("This is a * required field"),

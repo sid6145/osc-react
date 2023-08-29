@@ -57,8 +57,6 @@ const Category = () => {
   }, []);
 
   const { productCategories } = useSelector((state) => state.dashboardSlice);
-  console.log("categoryProducts:::",productCategories)
-  console.log("selectedOption------>",selectedOption)
   return (
     <div className="category-root">
       <div className="sort-container">

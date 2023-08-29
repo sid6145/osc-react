@@ -6,6 +6,7 @@ import {
   setProductDetails,
   setCategories,
   fetchDashboardData,
+  handleIsSocketConnected,
 } from "../redux/dashboardSlice";
 import { setCartData } from "../redux/dashboardSlice";
 let socket = null;
@@ -64,12 +65,14 @@ const useSocket = () => {
   const startConnection = () => {
     connectWebsocket();
     socket.onopen = (event) => {
-      if (socket.readyState === 1) {
+      if (socket.readyState === socket.OPEN) {
+        dispatch(handleIsSocketConnected(true))
         handleHeartBeats();
         msgReceivedInterval = setInterval(() => {
           currentTime = moment().format();
           const diff = moment(currentTime).diff(setTimeStamp) / 1000;
           if (diff > 30) {
+            dispatch(handleIsSocketConnected(false))
             handleReconnect();
           }
           if (diff > 120) {
@@ -83,6 +86,9 @@ const useSocket = () => {
       setTimeStamp = moment().format();
       const data = JSON.parse(event.data);
       console.log("event-data", data);
+      // if(data?.BCM) {
+      //   dispatch(handleIsSocketConnected(true))
+      // }
       switch (data.MT) {
         case "2":
           dispatch(setProductDetails(data));
@@ -98,7 +104,7 @@ const useSocket = () => {
         case "11":
           dispatch(
             fetchDashboardData(
-              data?.dataObject?.data.length ? data.dataObject.data : []
+              data?.dataObject?.data?.length ? data.dataObject.data : []
             )
           );
           break;

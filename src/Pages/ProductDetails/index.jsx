@@ -33,7 +33,7 @@ const ProductDetails = (props) => {
     sendMessage({ MT: "9", userId: userData.userId, prodId });
     const cartItem = {
       prodMarketPrice: productDetails.prodMarketPrice,
-      prodName: productDetails.name,
+      prodName: productDetails.prodName,
       productId: productDetails.prodId,
     };
     dispatch(addToCart(cartItem))
