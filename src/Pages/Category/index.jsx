@@ -77,7 +77,7 @@ const Category = () => {
         </div>
       </div>
       <div>
-        <ProductList categoryTitle="abc" productData={productCategories} />
+        <ProductList productData={productCategories} />
       </div>
     </div>
   );

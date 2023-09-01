@@ -3,10 +3,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import "./CartItem.css";
 import { IconButton } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { useDispatch } from "react-redux";
-import { handleProdQuantityUpdate, handleDeleteCartItem } from "../../redux/dashboardSlice";
-import useSocket from "../../customHooks/useSocket"
+import {
+  handleProdQuantityUpdate,
+  handleDeleteCartItem,
+} from "../../redux/dashboardSlice";
+import useSocket from "../../customHooks/useSocket";
 
 const CartItem = (props) => {
   const { cartData } = props;
@@ -21,8 +24,8 @@ const CartItem = (props) => {
       sendMessage({ MT: "9", userId: userData.userId, prodId });
       dispatch(handleProdQuantityUpdate({ prodId, shouldIncrease }));
     } else {
-      if(cartData.cartQty === 1) {
-        return alert("NOOOOO! don't do that")
+      if (cartData.cartQty === 1) {
+        return 
       }
       sendMessage({ MT: "8", userId: userData.userId, prodId });
       dispatch(handleProdQuantityUpdate({ prodId, shouldIncrease }));
@@ -53,15 +56,16 @@ const CartItem = (props) => {
         </div>
         <div className="quantity">
           <IconButton
-            onClick={() => handelProductQuantity(cartData?.productId, true)}
+            onClick={() => handelProductQuantity(cartData?.productId, false)}
           >
-            <AddCircleIcon />
+            <RemoveCircleOutlineIcon htmlColor="#013678"/>
           </IconButton>
           <div>{cartData?.cartQty}</div>
           <IconButton
-            onClick={() => handelProductQuantity(cartData?.productId, false)}
+
+            onClick={() => handelProductQuantity(cartData?.productId, true)}
           >
-            <RemoveCircleIcon />
+            <AddCircleIcon htmlColor="#013678"/>
           </IconButton>
         </div>
       </div>

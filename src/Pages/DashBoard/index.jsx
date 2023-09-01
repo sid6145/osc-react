@@ -38,10 +38,8 @@ const Dashboard = (props) => {
     dispatch(handleCartCountChange())
   }, []);
 
-  console.log("categories", categories);
   return (
-    <div className="dashboar-root">
-      <h2>{userData.sessionId}</h2>
+    <div className="dashboard-root">
       {!recentlyViewedProducts && categories && ( 
         <ProductList categoryTitle="Categories" productData={categories} />
       )}

@@ -18,6 +18,8 @@ import { styled } from "@mui/material/styles";
 import CartPrice from "../CartPrice";
 import { useSelector } from "react-redux";
 import Status from "../Status";
+import { handleCartCountChange } from "../../redux/dashboardSlice";
+import { useDispatch } from "react-redux";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -43,6 +45,7 @@ const DashboardHeader = (props) => {
     (state) => state.dashboardSlice
   );
   const increasedValue = totalCartPrice + totalCartPrice * (7 / 100);
+  const dispatch = useDispatch()
 
   const onClickLogout = async () => {
     const payload = {
@@ -52,7 +55,6 @@ const DashboardHeader = (props) => {
     const response = await apiClient.post(URLS.LOGOUT, payload);
     if (response?.code === 200) {
       closeConnection();
-      navigate("/");
     }
   };
 
@@ -75,7 +77,9 @@ const DashboardHeader = (props) => {
         cartPrice += item?.prodMarketPrice * item?.cartQty;
       });
     setTotalCartPrice(cartPrice);
+    dispatch(handleCartCountChange(cart?.length))
   }, [cart]);
+
 
   const handleCartClick = () => {
     sendMessage({ MT: "6", userId: userData?.userId });
@@ -94,9 +98,9 @@ const DashboardHeader = (props) => {
   return (
     <>
       <div className="dashboard-header-root">
-        <IconButton onClick={() => onclickLogo()} className="logo">
+        <Button onClick={() => onclickLogo()} className="logo">
           <h4>OSC</h4>
-        </IconButton>
+        </Button>
         <div className="search-input-container">
           <input
             placeholder="Search for products, brands and more"
@@ -177,8 +181,7 @@ const DashboardHeader = (props) => {
           </div>
         </Drawer>
       </div>
-
-      <Status connected={isSocketConnected} className={"status"} />
+      <Status className={"status"} />
     </>
   );
 };

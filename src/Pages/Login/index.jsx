@@ -38,13 +38,13 @@ const Login = (props) => {
   const getErrorsBasedOnCode = (errorCode) => {
     switch (errorCode) {
       case 201:
-        return "USER ID IS INVALID";
+        return "USERNAME OR PASSWORD IS INVALID";
       case 202:
-        return "PLEASE ENTER A VALID PASSWORD";
+        return "USERNAME OR PASSWORD IS INVALID";
       case 204:
         return "USER ALREADY LOGGED IN";
       case 205:
-        return "ACCOUNT LOCKED";
+        return "YOUR ACCOUNT HAS BEEN LOCKED";
       default:
         return "SOMETHING WENT WRONG";
     }

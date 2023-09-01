@@ -24,10 +24,13 @@ function RegistrationForm(props) {
 
   const registrationFormSchema = Yup.object().shape({
     fullName: Yup.string()
-    .required("This is a * required field")
-    .matches(/^[a-zA-Z\s]+$/, "Only letters are allowed in this field."),
+      .required("This is a * required field")
+      .matches(/^[a-zA-Z\s]+$/, "Only letters are allowed in this field."),
     email: Yup.string()
-      .email("Please enter a valid email address")
+      .matches(
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        "Please enter a valid email address"
+      )
       .required("This is a * required field"),
     mobile: Yup.string().required("This is a * required field"),
     dob: Yup.string().required("This is a * required field"),
@@ -103,7 +106,7 @@ function RegistrationForm(props) {
             name="email"
             value={values.email}
             onChange={handleChange}
-            // onBlur={handleBlur}
+            onBlur={handleBlur}
             placeHolder="Email ID"
             error={errors.email ? errors.email : null}
           />
@@ -113,7 +116,7 @@ function RegistrationForm(props) {
               name="mobile"
               value={values.mobile}
               onChange={handleChange}
-              // onBlur={handleBlur}
+              onBlur={handleBlur}
               placeHolder="Mobile No."
               error={errors.mobile ? errors.mobile : null}
             />
@@ -122,7 +125,7 @@ function RegistrationForm(props) {
               name="dob"
               value={values.dob}
               onChange={handleChange}
-              // onBlur={handleBlur}
+              onBlur={handleBlur}
               placeHolder="Date of Birth"
               error={errors.dob ? errors.dob : null}
             />

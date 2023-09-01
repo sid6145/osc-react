@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import ProductList from "../../components/ProductList";
 import useSocket from "../../customHooks/useSocket";
 import { addToCart, handleCartCountChange } from "../../redux/dashboardSlice";
+import { useParams } from "react-router-dom";
+import { handleScrollIntoView } from "../../utils/helpers";
 
 const InfoWrap = ({ title, children, className, style }) => {
   return (
@@ -27,7 +29,6 @@ const ProductDetails = (props) => {
   const {sendMessage} = useSocket()
   const userData = JSON.parse(localStorage.getItem("userData"))
   const dispatch = useDispatch()
-  console.log("productDetails::::>",productDetails, cart)
 
   const onAddtoCart = (prodId) => {
     sendMessage({ MT: "9", userId: userData.userId, prodId });
@@ -40,12 +41,16 @@ const ProductDetails = (props) => {
   };
 
   useEffect(() => {
+    handleScrollIntoView("prod", "start")
+  }, [productDetails?.prodId]);
+
+  useEffect(() => {
    dispatch(handleCartCountChange())
   }, [cart])
   
   return (
     <>
-      <Grid container className="prod-root">
+      <Grid id="prod" container className="prod-root">
         <Grid item xs={3.5}>
           <div className="prod-img">
             {productDetails?.prodId ? (
@@ -99,7 +104,7 @@ const ProductDetails = (props) => {
               <p>Rated by 1896 & 512 Reviewed</p>
             </div>
             <div className="price-info">
-              <h4>{productDetails?.prodMarketPrice}</h4>
+              <h4>₹{productDetails?.prodMarketPrice}</h4>
               <h5>₹ {increasedValue}</h5>
               <h6>7% off</h6>
             </div>
@@ -128,7 +133,7 @@ const ProductDetails = (props) => {
           </div>
         </Grid>
       </Grid>
-      <div>
+      <div className="similar-products">
         <ProductList
           categoryTitle="Similar Products"
           productData={

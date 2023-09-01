@@ -14,3 +14,11 @@ export const handleHideEmail = (email) => {
       email.length
     )}`;
 }
+
+export const handleScrollIntoView = (id = "", block = "start") => {
+  const ele = document.getElementById(id)
+  if(!ele) {
+    return console.error(`element was not found`)
+  }
+  ele.scrollIntoView({block, behavior: "smooth"})
+}

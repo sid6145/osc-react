@@ -41,9 +41,14 @@ const handleDashboardDataUpdate = (state, item) => {
       state.similarProducts = item[SIMILAR]?.length ? item[SIMILAR] : null;
       break;
     case CART:
-      state.cart = item[CART]?.length ? item[CART] : null;
+      state.cart = item[CART]?.length ? item[CART] : [];
       break;
     default:
+      state.featuredProducts = null;
+      state.categories = null;
+      state.recentlyViewedProducts = null;
+      state.similarProducts = null;
+      state.cart = [];
       break;
   }
 };
@@ -106,6 +111,7 @@ export const dashboardSlice = createSlice({
     },
     handleIsSocketConnected: (state, action) => {
       state.isSocketConnected = action.payload
+      // console.log("action",action)
     }
   },
 });

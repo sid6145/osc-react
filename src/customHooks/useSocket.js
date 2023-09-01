@@ -1,23 +1,21 @@
 import moment from "moment/moment";
 import { SOCKET_BASE_URL, WEBSOCKET_PROTOCOL, DEVICE_TYPE } from "../constants";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   setProductDetails,
   setCategories,
   fetchDashboardData,
+  setCartData,
   handleIsSocketConnected,
 } from "../redux/dashboardSlice";
-import { setCartData } from "../redux/dashboardSlice";
 let socket = null;
 let hbInterval = null;
 let msgReceivedInterval = null;
-let setTimeStamp = null;
-let currentTime = null;
+let setTimeStamp =  moment().format();
+let currentTime = moment().format();
 
 const useSocket = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
-  const navigate = useNavigate();
   const headers = [
     WEBSOCKET_PROTOCOL,
     userData.userId,
@@ -27,52 +25,55 @@ const useSocket = () => {
   const dispatch = useDispatch();
 
   const sendMessage = (payload) => {
-    console.log("payload::", payload);
     socket.send(JSON.stringify(payload));
   };
 
   const connectWebsocket = () => {
-    console.log("CALLED::::");
     socket = new WebSocket(SOCKET_BASE_URL, headers);
   };
+
 
   const handleHeartBeats = () => {
     if (hbInterval) {
       clearInterval(hbInterval);
     }
     hbInterval = setInterval(() => {
-      console.log("PINGED");
       sendMessage({ MT: "ping" });
     }, 10000);
   };
 
   const closeConnection = async () => {
     socket.close();
-    localStorage.clear();
     clearInterval(hbInterval);
     clearInterval(msgReceivedInterval);
     window.location.reload();
-    navigate("/");
+    localStorage.clear();
   };
 
   const handleReconnect = () => {
-    if (socket.readyState === WebSocket.CLOSED) {
-      clearInterval(hbInterval);
-      connectWebsocket();
+    console.log("::::::::::RECONNECT::::::::::")
+    clearInterval(hbInterval);
+    if(socket.readyState === WebSocket.OPEN) {
+       socket.close();
+    } else {
+      setTimeStamp = moment().format();
     }
+    dispatch(handleIsSocketConnected(false));
+    startConnection();
   };
 
-  const startConnection = () => {
+  const startConnection = async () => {
     connectWebsocket();
     socket.onopen = (event) => {
-      if (socket.readyState === socket.OPEN) {
-        dispatch(handleIsSocketConnected(true))
+      if (socket.readyState === 1) {
+        console.log(":::::THE SOCKET IS OPEN!:::::");
+        setTimeStamp = moment().format();
+        dispatch(handleIsSocketConnected(true));
         handleHeartBeats();
         msgReceivedInterval = setInterval(() => {
           currentTime = moment().format();
           const diff = moment(currentTime).diff(setTimeStamp) / 1000;
-          if (diff > 30) {
-            dispatch(handleIsSocketConnected(false))
+          if (diff > 30 && socket.readyState !== WebSocket.OPEN) {
             handleReconnect();
           }
           if (diff > 120) {
@@ -85,10 +86,6 @@ const useSocket = () => {
     socket.onmessage = (event) => {
       setTimeStamp = moment().format();
       const data = JSON.parse(event.data);
-      console.log("event-data", data);
-      // if(data?.BCM) {
-      //   dispatch(handleIsSocketConnected(true))
-      // }
       switch (data.MT) {
         case "2":
           dispatch(setProductDetails(data));
@@ -114,10 +111,12 @@ const useSocket = () => {
     };
 
     socket.onerror = (error) => {
+      dispatch(handleIsSocketConnected(false));
       console.log("error::::", error);
     };
 
     socket.onclose = () => {
+      // dispatch(handleIsSocketConnected(false));
       console.log("SOCKET CLOSED:::");
     };
   };

@@ -8,15 +8,13 @@ const ProductCard = (props) => {
     image,
     title,
     price,
-    discountedPrice,
     onClickProduct,
     percentOff,
     productId,
     categoryId,
   } = props;
   const [favorites, setFavorites] = useState(false);
-  const increasedValue =
-  price + price * (7 / 100);
+  const increasedValue = price + price * (7 / 100);
   return (
     <div
       onClick={() => onClickProduct(productId, categoryId)}
@@ -25,9 +23,9 @@ const ProductCard = (props) => {
       <div className="product-image-root">
         {image ? <img src={image} alt="product-img" /> : null}
       </div>
-      <div className="product-details">
+      <div className={`product-details ${!price ? "cat-details" : ""}`}>
         <div className="product-title">
-          <h4>{title}</h4>
+          <h4 className={!price ? "prod-title-text" : ""}>{title}</h4>
           {price && (
             <button
               onClick={() => setFavorites(!favorites)}
@@ -37,11 +35,12 @@ const ProductCard = (props) => {
             </button>
           )}
         </div>
+        {price &&
         <div className="product-price">
-          <h4>{price || ''}</h4>
-          <h5>{parseInt(increasedValue) || ''}</h5>
-          <h6>{percentOff || ''}</h6>
-        </div>
+          <h4>₹{price || ""}</h4>
+          <h5>₹{parseInt(increasedValue) || ""}</h5>
+          <h6>{percentOff || ""}</h6>
+        </div>}
       </div>
     </div>
   );

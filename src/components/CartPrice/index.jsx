@@ -12,15 +12,15 @@ const CartPrice = (props) => {
         </div>
         <div className='cart-price-data'>
             <p>Discount</p>
-            <p>-₹{parseInt(increasedValue - totalCartPrice)}</p>
+            <p className='discount'>-₹{parseInt(increasedValue - totalCartPrice)}</p>
         </div>
         <div className='cart-price-data'>
             <p>Delivery Charges</p>
-            <p>Free</p>
+            <p className='free-text-style'>Free</p>
         </div>
         <div className='cart-price-data'>
-            <p>Total</p>
-            <p>{totalCartPrice}</p>
+            <p className='total'>Total</p>
+            <p className='total-cart-price'>{totalCartPrice}</p>
         </div>
     </div>
   )

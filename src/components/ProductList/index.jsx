@@ -5,9 +5,10 @@ import ProductCard from "../ProductCard";
 import { Grid } from "@mui/material";
 import useSocket from "../../customHooks/useSocket";
 import { useNavigate } from "react-router-dom";
+import { handleScrollIntoView } from "../../utils/helpers";
 
 const ProductList = (props) => {
-  const { categoryTitle, onClickViewAll, productData } = props;
+  const { categoryTitle, onClickViewAll, productData, scrollToTopId } = props;
 
   const { sendMessage } = useSocket();
   const navigate = useNavigate()
@@ -24,12 +25,14 @@ const ProductList = (props) => {
 
   return (
     <div className="product-list-root">
-      {categoryTitle && (   
+      {categoryTitle ? (
         <div className="product-list-header">
           <h4>{categoryTitle}</h4>
-          <CustomButton>View All</CustomButton>
+          {productData.length > 6 ? (
+            <CustomButton>View All</CustomButton>
+          ) : null}
         </div>
-      )}
+      ) : null}
       <Grid container spacing={3} className="product-list">
         {productData?.length
           ? productData.map((item, index) => (
