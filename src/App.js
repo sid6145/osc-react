@@ -17,11 +17,11 @@ function App() {
   const userData = JSON.parse(localStorage.getItem("userData"));
 
   const { isLoggedIn } = useSelector((state) => state.dashboardSlice);
-  useEffect(() => {
-    if (userData?.userId && userData?.sessionId) {
-      dispatch(handleIsLoggedIn(true));
-    }
-  }, [userData]);
+  // useEffect(() => {
+  //   if (userData?.userId && userData?.sessionId) {
+  //     dispatch(handleIsLoggedIn(true));
+  //   }
+  // }, [userData]);
 
   return (
     <div className="App">

@@ -18,7 +18,7 @@ import { styled } from "@mui/material/styles";
 import CartPrice from "../CartPrice";
 import { useSelector } from "react-redux";
 import Status from "../Status";
-import { handleCartCountChange } from "../../redux/dashboardSlice";
+import { handleCartCountChange, handleIsLoggedIn } from "../../redux/dashboardSlice";
 import { useDispatch } from "react-redux";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -38,9 +38,9 @@ const DashboardHeader = (props) => {
   const open = Boolean(anchorEl);
   const { startConnection, closeConnection } = useSocket();
   const navigate = useNavigate();
-  const { sendMessage } = useSocket();
+  // const { sendMessage } = useSocket();
   const userData = JSON.parse(localStorage.getItem("userData"));
-  const firstName = userData.fullName.split(" ")[0];
+  const firstName = userData?.fullName?.split(" ")[0];
   const { cart, cartCount, isSocketConnected } = useSelector(
     (state) => state.dashboardSlice
   );
@@ -54,7 +54,9 @@ const DashboardHeader = (props) => {
     };
     const response = await apiClient.post(URLS.LOGOUT, payload);
     if (response?.code === 200) {
-      closeConnection();
+      dispatch(handleIsLoggedIn(false))
+      localStorage.clear();
+      // closeConnection();
     }
   };
 
@@ -66,33 +68,33 @@ const DashboardHeader = (props) => {
     setAnchorEl(null);
   };
 
-  useEffect(() => {
-    startConnection();
-  }, []);
+  // useEffect(() => {
+  //   startConnection();
+  // }, []);
 
-  useEffect(() => {
-    let cartPrice = 0;
-    cart?.length &&
-      cart.forEach((item) => {
-        cartPrice += item?.prodMarketPrice * item?.cartQty;
-      });
-    setTotalCartPrice(cartPrice);
-    dispatch(handleCartCountChange(cart?.length))
-  }, [cart]);
+  // useEffect(() => {
+  //   let cartPrice = 0;
+  //   cart?.length &&
+  //     cart.forEach((item) => {
+  //       cartPrice += item?.prodMarketPrice * item?.cartQty;
+  //     });
+  //   setTotalCartPrice(cartPrice);
+  //   dispatch(handleCartCountChange(cart?.length))
+  // }, [cart]);
 
 
   const handleCartClick = () => {
-    sendMessage({ MT: "6", userId: userData?.userId });
-    setCartDrawer((prev) => !prev);
+    // sendMessage({ MT: "6", userId: userData?.userId });
+    // setCartDrawer((prev) => !prev);
   };
 
   const handleCartClose = () => {
-    setCartDrawer(false);
+    // setCartDrawer(false);
   };
 
   const onclickLogo = () => {
-    sendMessage({ MT: "11" });
-    navigate("/dashboard");
+    // sendMessage({ MT: "11" });
+    // navigate("/dashboard");
   };
 
   return (
@@ -181,7 +183,7 @@ const DashboardHeader = (props) => {
           </div>
         </Drawer>
       </div>
-      <Status className={"status"} />
+      {/* <Status className={"status"} /> */}
     </>
   );
 };

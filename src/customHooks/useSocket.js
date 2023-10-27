@@ -86,6 +86,7 @@ const useSocket = () => {
     socket.onmessage = (event) => {
       setTimeStamp = moment().format();
       const data = JSON.parse(event.data);
+      console.log("event:::",event)
       switch (data.MT) {
         case "2":
           dispatch(setProductDetails(data));

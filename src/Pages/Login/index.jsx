@@ -11,7 +11,7 @@ import { URLS } from "../../constants";
 import ForgotPasswordModal from "../../components/ForgotPassModal";
 import CustomButton from "../../components/CustomButton";
 import { handleAlerts } from "../../utils/helpers";
-import {loginValidationSchema} from "../../validations"
+import { loginValidationSchema } from "../../validations";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { handleIsLoggedIn } from "../../redux/dashboardSlice";
@@ -22,14 +22,14 @@ const Login = (props) => {
   const [openFgtModal, setOpenFgtModal] = useState(false);
   const navigate = useNavigate();
   const { isLoading, handleLoading } = useLoader();
-  const userData = JSON.parse(localStorage.getItem("userData"))
-  const dispatch = useDispatch()
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    if(userData?.userId && userData?.sessionId) {
-      navigate("/dashboard")
-    }
-  },[userData, navigate])
+  // useEffect(() => {
+  //   if(userData?.userId && userData?.sessionId) {
+  //     navigate("/dashboard")
+  //   }
+  // },[userData, navigate])
 
   const onClickSignUp = () => {
     navigate("/sign-up?step=1");
@@ -87,7 +87,7 @@ const Login = (props) => {
                   "userData",
                   JSON.stringify(updatedUserData)
                 );
-                dispatch(handleIsLoggedIn(true))
+                dispatch(handleIsLoggedIn(true));
                 navigate("/dashboard");
                 resetForm();
               } else {

@@ -33,11 +33,10 @@ const handleDashboardDataUpdate = (state, item) => {
       state.categories = item[CATEGORIES]?.length ? item[CATEGORIES] : null;
       break;
     case RECENTLYVIEWED:
-      state.recentlyViewedProducts = item[RECENTLYVIEWED]?.length
-        ? item[RECENTLYVIEWED]
-        : null;
+      state.recentlyViewedProducts = item[RECENTLYVIEWED]
       break;
     case SIMILAR:
+      console.log(item[SIMILAR])
       state.similarProducts = item[SIMILAR]?.length ? item[SIMILAR] : null;
       break;
     case CART:
@@ -58,6 +57,7 @@ export const dashboardSlice = createSlice({
   initialState,
   reducers: {
     fetchDashboardData: (state, action) => {
+      console.log("payload:::::>>>>",action.payload)
       action?.payload?.length &&
         action.payload.forEach((item) => {
           handleDashboardDataUpdate(state, item);
