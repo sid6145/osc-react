@@ -34,19 +34,39 @@ const OtpForm = (props) => {
         if (resentOtp) {
           const payload = {
             userId: userData.userId,
+            OTP: values.otpId,
           };
-          const response = await apiClient.post(URLS.RESEND_OTP, payload);
+          const response = await apiClient.post(URLS.VERIFY_OTP, payload);
+          if (response.code === 500) {
+            handleLoading(false);
+            resetForm();
+            return setSearchParams({ step: 3 });
+          } else {
+            handleLoading(false);
+            handleAlerts(
+              "Error!",
+              getErrorsBasedOnCode(response.code),
+              "error",
+              async (result) => {
+                if (result.isConfirmed && response.code === 301) {
+                  setResendOtp(true);
+                  /*navigate("/sign-up?step=1")*/
+                }
+              }
+            );
+          }
+          /*const response = await apiClient.post(URLS.RESEND_OTP, payload);
           if (response.code === 200) {
             handleLoading(false);
             setResendOtp(false);
             return handleAlerts("Success", "", "success");
           } else {
             return handleAlerts("Error", "SOMETHING WENT WRONG", "error");
-          }
+          }*/
         }
         if (isForgotPassFlow) {
           const fgtPasswordPayload = {
-            email: userData.emailId,
+            userId: userData.emailId,
             OTP: values.otpId.toString(),
           };
           const response = await apiClient.post(
@@ -57,9 +77,15 @@ const OtpForm = (props) => {
             handleLoading(false);
             resetForm();
             return setSearchParams({ step: 3, fgtPass: true });
-          } else {
+          } else if(response.code ===199){
             handleLoading(false);
-            return handleAlerts("Error!", "INVALID OTP", "error");
+            resetForm();
+            return handleAlerts("Error!", "INVALID OTP!", "error");
+          } 
+          else {  
+            handleLoading(false);
+            resetForm();
+            return handleAlerts("Error!", getErrorsBasedOnCode(response.code), "error");
           }
         }
         const payload = {
@@ -79,8 +105,9 @@ const OtpForm = (props) => {
             "error",
             async (result) => {
               if (result.isConfirmed && response.code === 301) {
-                // setResendOtp(true);
-                navigate("/sign-up?step=1")
+                resetForm();
+                setResendOtp(true);
+                /*navigate("/sign-up?step=1")*/
               }
             }
           );
@@ -115,7 +142,7 @@ const OtpForm = (props) => {
             type="submit"
             className="submit-btn"
           >
-            {resentOtp ? "Resend OTP" : "Proceed"}
+            {resentOtp ? "Proceed" : "Proceed"}
           </CustomButton>
         </Form>
       )}

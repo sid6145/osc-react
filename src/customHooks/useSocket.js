@@ -14,14 +14,24 @@ let msgReceivedInterval = null;
 let setTimeStamp =  moment().format();
 let currentTime = moment().format();
 
+function customUrlEncode(userId) {
+  const encoded = btoa(userId)
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=+$/, ''); // Remove trailing equal signs
+  return encoded;
+}
+
 const useSocket = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
+  const encodedUserId = customUrlEncode(userData.userId);
   const headers = [
     WEBSOCKET_PROTOCOL,
-    userData.userId,
-    userData.sessionId,
-    DEVICE_TYPE,
+    encodedUserId,
+    //userData.sessionId,
+    DEVICE_TYPE
   ];
+  console.log(headers);
   const dispatch = useDispatch();
 
   const sendMessage = (payload) => {

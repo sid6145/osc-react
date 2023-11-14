@@ -49,8 +49,7 @@ const DashboardHeader = (props) => {
 
   const onClickLogout = async () => {
     const payload = {
-      userId: userData?.userId,
-      sessionId: userData?.sessionId,
+      userId: userData?.userId
     };
     const response = await apiClient.post(URLS.LOGOUT, payload);
     if (response?.code === 200) {
@@ -68,9 +67,9 @@ const DashboardHeader = (props) => {
     setAnchorEl(null);
   };
 
-  // useEffect(() => {
-  //   startConnection();
-  // }, []);
+   useEffect(() => {
+     startConnection();
+   }, []);
 
   // useEffect(() => {
   //   let cartPrice = 0;

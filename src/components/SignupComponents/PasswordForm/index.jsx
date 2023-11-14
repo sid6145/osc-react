@@ -47,7 +47,7 @@ const {searchParams, isLoading, handleLoading, userData} = props
         handleLoading(true);
         if (isForgotPassFlow) {
           const changePassPayload = {
-            email: userData.emailId,
+            userId: userData.emailId,
             password: values.password,
           };
           const response = await apiClient.post(

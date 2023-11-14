@@ -32,7 +32,7 @@ function RegistrationForm(props) {
         "Please enter a valid email address"
       )
       .required("This is a * required field"),
-    mobile: Yup.string().required("This is a * required field"),
+    mobile: Yup.string().required("This is a * required field").length(10,"Please Enter your 10 digits Contact no"),
     dob: Yup.string().required("This is a * required field"),
     captcha: Yup.string().required("This is a * required field"),
   });
@@ -55,7 +55,7 @@ function RegistrationForm(props) {
           name: values.fullName,
           email: values.email,
           contact: values.mobile,
-          DOB: values.dob,
+          dob: values.dob,
         };
         if (!validateCaptcha(values?.captcha)) {
           handleAlerts(

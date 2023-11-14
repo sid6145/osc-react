@@ -20,7 +20,7 @@ export const getErrorsBasedOnCode = (errorCode) => {
     case 502:
       return "INVALID OTP";
     case 301:
-      return "YOU HAVE EXCEEDED THE MAXIMUM NUMBER OF ATTEMPTS FOR ENTERING THE OTP";
+      return "YOU HAVE ENTERED WRONG OTP, WE HAVE SEND NEW OTP TO YOUR RAGISTERED EMAIL";/*THE MAXIMUM NUMBER OF ATTEMPTS FOR ENTERING THE OTP*/
     default: {
       return "SOMETHING WENT WRONG";
     }
