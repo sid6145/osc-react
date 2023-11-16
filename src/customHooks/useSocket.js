@@ -58,12 +58,13 @@ const useSocket = () => {
     clearInterval(msgReceivedInterval);
     window.location.reload();
     localStorage.clear();
+    window.location.href("/login")
   };
 
   const handleReconnect = () => {
     console.log("::::::::::RECONNECT::::::::::")
     clearInterval(hbInterval);
-    if(socket.readyState === WebSocket.OPEN) {
+    if(socket.readyState === WebSocket.CLOSED) {
        socket.close();
     } else {
       setTimeStamp = moment().format();
@@ -83,6 +84,7 @@ const useSocket = () => {
         msgReceivedInterval = setInterval(() => {
           currentTime = moment().format();
           const diff = moment(currentTime).diff(setTimeStamp) / 1000;
+          console.log("diff::", diff)
           if (diff > 30 && socket.readyState !== WebSocket.OPEN) {
             handleReconnect();
           }
