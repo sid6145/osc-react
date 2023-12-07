@@ -25,19 +25,19 @@ const deleteCartItem = (state, prodId) => {
 };
 
 const handleDashboardDataUpdate = (state, item) => {
-  console.log(item);
   switch (item.TYPE) {
     case FEATURED:
+      console.log("::::HELLO",item, state.featuredProducts)
       state.featuredProducts = item[FEATURED]?.length ? item[FEATURED] : null;
       break;
     case CATEGORIES:
+      console.log("CAT::", state.categories)
       state.categories = item[CATEGORIES]?.length ? item[CATEGORIES] : null;
       break;
     case RECENTLYVIEWED:
       state.recentlyViewedProducts = item[RECENTLYVIEWED]
       break;
     case SIMILAR:
-      console.log(item[SIMILAR])
       state.similarProducts = item[SIMILAR]?.length ? item[SIMILAR] : null;
       break;
     case CART:
@@ -58,7 +58,6 @@ export const dashboardSlice = createSlice({
   initialState,
   reducers: {
     fetchDashboardData: (state, action) => {
-      console.log("payload:::::>>>>",action.payload)
       action?.payload?.length &&
         action.payload.forEach((item) => {
           handleDashboardDataUpdate(state, item);
@@ -74,7 +73,6 @@ export const dashboardSlice = createSlice({
       const prodIndex = state?.cart?.findIndex(
         (item) => item.productId === action.payload.productId
       );
-      console.log("prodIndex:::::",prodIndex);
       if (prodIndex >= 0) {
         state.cart[prodIndex].cartQty += 1;
       } else {
@@ -112,7 +110,6 @@ export const dashboardSlice = createSlice({
     },
     handleIsSocketConnected: (state, action) => {
       state.isSocketConnected = action.payload
-      // console.log("action",action)
     }
   },
 });

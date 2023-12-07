@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import ProductList from "../../components/ProductList";
 import useSocket from "../../customHooks/useSocket";
 import { addToCart, handleCartCountChange } from "../../redux/dashboardSlice";
-import { useParams } from "react-router-dom";
 import { handleScrollIntoView } from "../../utils/helpers";
 
 const InfoWrap = ({ title, children, className, style }) => {
@@ -24,7 +23,6 @@ const InfoWrap = ({ title, children, className, style }) => {
 
 const ProductDetails = (props) => {
   const { productDetails,cart } = useSelector((state) => state.dashboardSlice);
-  console.log("productDetails",productDetails);
   const increasedValue =
   productDetails?.prodMarketPrice + productDetails?.prodMarketPrice * (7 / 100);
   const {sendMessage} = useSocket()

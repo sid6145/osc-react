@@ -31,7 +31,6 @@ const useSocket = () => {
     //userData.sessionId,
     DEVICE_TYPE
   ];
-  console.log(headers);
   const dispatch = useDispatch();
 
   const sendMessage = (payload) => {

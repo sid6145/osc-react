@@ -8,13 +8,12 @@ import { useNavigate } from "react-router-dom";
 import { handleScrollIntoView } from "../../utils/helpers";
 
 const ProductList = (props) => {
-  const { categoryTitle, onClickViewAll, productData, scrollToTopId } = props;
+  const { categoryTitle, onClickViewAll, productData, scrollToTopId, catId } = props;
 
   const { sendMessage } = useSocket();
   const navigate = useNavigate()
 
   const onClickProduct = (prodId, catId) => {
-    console.log(prodId,catId);
     if (prodId) {
       sendMessage({ MT: "2", catId, prodId });
       navigate(`/product/${prodId}`)
@@ -23,7 +22,7 @@ const ProductList = (props) => {
       navigate(`/category/${catId}`)
     }
   };
-console.log("produtData",productData);
+  console.log("productData:::>",productData)
   return (
     <div className="product-list-root">
       {categoryTitle ? (
@@ -45,7 +44,7 @@ console.log("produtData",productData);
                   percentOff={item?.prodMarketPrice && "%7 off"}
                   title={item?.prodName || item?.categoryName || item?.ProdName}
                   productId={item?.productId}
-                  categoryId={item?.categoryId}
+                  categoryId={item?.categoryId || catId}
                   image={
                     item?.productId || item?.categoryId
                       ? require(`../../assets/images/${

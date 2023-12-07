@@ -57,7 +57,6 @@ const Category = () => {
   }, []);
 
   const { productCategories } = useSelector((state) => state.dashboardSlice);
-  console.log("productCategories",productCategories)
   return (
     <div className="category-root">
       <div className="sort-container">
@@ -78,7 +77,7 @@ const Category = () => {
         </div>
       </div>
       <div>
-        <ProductList productData={productCategories} />
+        <ProductList catId={params.catId} productData={productCategories} />
       </div>
     </div>
   );

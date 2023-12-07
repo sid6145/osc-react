@@ -20,7 +20,7 @@ const Dashboard = (props) => {
   const getDashboardData = async () => {
     const payload = {
       userId: userData.userId,
-      //sessionId: userData.sessionId,
+      // sessionId: userData.sessionId,
     };
     const response = await apiClient.post(URLS.DASHBOARD, payload);
     if (response?.code === 200) {
@@ -37,7 +37,6 @@ const Dashboard = (props) => {
     getDashboardData();
     dispatch(handleCartCountChange())
   }, []);
-  console.log(categories);
   return (
     <div className="dashboard-root">
        {!recentlyViewedProducts && categories && ( 
