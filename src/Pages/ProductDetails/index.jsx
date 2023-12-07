@@ -24,6 +24,7 @@ const InfoWrap = ({ title, children, className, style }) => {
 
 const ProductDetails = (props) => {
   const { productDetails,cart } = useSelector((state) => state.dashboardSlice);
+  console.log("productDetails",productDetails);
   const increasedValue =
   productDetails?.prodMarketPrice + productDetails?.prodMarketPrice * (7 / 100);
   const {sendMessage} = useSocket()

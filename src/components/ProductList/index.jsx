@@ -14,15 +14,16 @@ const ProductList = (props) => {
   const navigate = useNavigate()
 
   const onClickProduct = (prodId, catId) => {
+    console.log(prodId,catId);
     if (prodId) {
       sendMessage({ MT: "2", catId, prodId });
       navigate(`/product/${prodId}`)
     } else {
-      // sendMessage({MT: "3", catId, filter: "P" })
+      sendMessage({MT: "3", catId, filter: "P" })
       navigate(`/category/${catId}`)
     }
   };
-
+console.log("produtData",productData);
   return (
     <div className="product-list-root">
       {categoryTitle ? (
@@ -42,7 +43,7 @@ const ProductList = (props) => {
                   onClickProduct={onClickProduct}
                   price={item?.prodMarketPrice}
                   percentOff={item?.prodMarketPrice && "%7 off"}
-                  title={item?.prodName || item?.categoryName}
+                  title={item?.prodName || item?.categoryName || item?.ProdName}
                   productId={item?.productId}
                   categoryId={item?.categoryId}
                   image={

@@ -25,6 +25,7 @@ const deleteCartItem = (state, prodId) => {
 };
 
 const handleDashboardDataUpdate = (state, item) => {
+  console.log(item);
   switch (item.TYPE) {
     case FEATURED:
       state.featuredProducts = item[FEATURED]?.length ? item[FEATURED] : null;

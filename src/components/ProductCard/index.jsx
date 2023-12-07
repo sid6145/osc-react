@@ -15,6 +15,7 @@ const ProductCard = (props) => {
   } = props;
   const [favorites, setFavorites] = useState(false);
   const increasedValue = price + price * (7 / 100);
+  console.log("productId::::",productId)
   return (
     <div
       onClick={() => onClickProduct(productId, categoryId)}

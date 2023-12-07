@@ -6,11 +6,11 @@
 // const BASE_URL_TWO = "http://localhost:8000";
 
 
-const BASE_URL_ONE = "http://192.168.99.221:8081"
-const BASE_URL_TWO = "http://192.168.99.221:8081"
-const BASE_URL_THREE = "http://192.168.99.221:8081"
+const BASE_URL_ONE = "http://localhost:8081"
+const BASE_URL_TWO = "http://localhost:8081"
+const BASE_URL_THREE = "http://localhost:8081"
 
-export const SOCKET_BASE_URL = "ws://192.168.99.221:8081";
+export const SOCKET_BASE_URL = "ws://localhost:8081";
 
 export const URLS = {
   SIGN_UP: `${BASE_URL_ONE}/user/Signup`,
